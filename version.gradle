@@ -1,0 +1,6 @@
+ext {
+    versions = [
+            lombok: '1.18.26',
+            jackson: '2.14.0'
+    ]
+}
