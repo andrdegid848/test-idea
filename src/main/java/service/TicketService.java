@@ -79,14 +79,13 @@ public class TicketService {
                 .average()
                 .orElse(0);
 
-        double medianPrice = 0, diff = Math.abs(filteredTickets.get(0).getPrice() - averagePrice);
+        List<Integer> sortedPrices = filteredTickets.stream()
+                .map(Ticket::getPrice)
+                .sorted()
+                .toList();
 
-        for (Ticket ticket : filteredTickets) {
-            if (Math.abs(ticket.getPrice() - averagePrice) < diff) {
-                diff = Math.abs(ticket.getPrice() - averagePrice);
-                medianPrice = ticket.getPrice();
-            }
-        }
+        int size = sortedPrices.size();
+        double medianPrice = (size % 2 == 0) ? (sortedPrices.get(size / 2 - 1) + sortedPrices.get(size / 2)) / 2.0 : sortedPrices.get(size / 2);
 
         return averagePrice - medianPrice;
     }
